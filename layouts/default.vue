@@ -4,17 +4,18 @@
       <img src="assets/images/arizona.png" class="w-16 h-16 bg-transparent">
     </div>
 
-    <div class="basis-1/4 max-sm:basis-auto"></div>
+    <button 
+      class="p-2 text-white bg-gray-600 rounded-lg max-sm:block hidden" 
+      @click="toggleMenu">
+      Меню
+    </button>
 
-    <nav class="basis-1/2 flex flex-row items-center justify-end px-8 gap-4 max-sm:basis-auto max-sm:absolute max-sm:top-full max-sm:w-full
-      max-sm:justify-center max-sm:flex-col max-sm:gap-0 max-sm:bg-white max-sm:px-0">
+    <nav :class="['basis-1/2 flex flex-row items-center justify-end px-8 gap-4', 
+      {'hidden': !showMenu, 'max-sm:flex max-sm:flex-col max-sm:items-center max-sm:w-full max-sm:absolute max-sm:top-full max-sm:bg-white max-sm:px-0'}]">
       <NuxtLink to="/" class="my-auto p-2 hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:border-b-2 max-sm:text-center">
         Home
       </NuxtLink>
-
-      <!-- Labs Dropdown Menu -->
-      <div class="relative my-auto p-2 hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center"
-           @click="toggleSubmenu">
+      <div class="relative my-auto p-2 hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center" @click="toggleSubmenu">
         Labs
         <div v-show="showSubmenu" class="flex flex-col absolute top-full bg-white text-black w-56 text-center shadow-md">
           <NuxtLink to="/lab3" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white">Lab3</NuxtLink>
@@ -23,9 +24,12 @@
           <NuxtLink to="/lab6" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white">Lab6</NuxtLink>
         </div>
       </div>
-
-      <NuxtLink to="/login" class="my-auto p-2 hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">LogIn</NuxtLink>
-      <NuxtLink to="/logout" class="my-auto p-2 hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">LogOut</NuxtLink>
+      <NuxtLink to="/login" class="my-auto p-2 hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">
+        LogIn
+      </NuxtLink>
+      <NuxtLink to="/logout" class="my-auto p-2 hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">
+        LogOut
+      </NuxtLink>
     </nav>
   </header>
 
@@ -44,8 +48,13 @@
 import { ref } from 'vue';
 
 const showSubmenu = ref(false);
+const showMenu = ref(false);
 
 const toggleSubmenu = () => {
   showSubmenu.value = !showSubmenu.value;
+};
+
+const toggleMenu = () => {
+  showMenu.value = !showMenu.value;
 };
 </script>

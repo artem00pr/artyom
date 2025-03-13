@@ -1,46 +1,66 @@
 <template>
-  <header class="flex flex-row w-full items-center relative bg-green-400 border-b-2 border-gray-400 max-sm:justify-between max-sm:relative">
-    <div class="basis-1/4 max-sm:basis-auto justify-start px-8 min-w-40 max-sm:auto">
-      <img src="assets/images/arizonalogo.png" class="w-16 h-16 bg-transparent">
+  <header class="flex items-center justify-between w-full bg-green-400 border-b-2 border-gray-400 p-4">
+    <div class="basis-1/4">
+      <img src="assets/images/arizona.png" class="w-16 h-16 bg-transparent">
     </div>
-    <div class="basis-3/4 max-sm:basis-auto">
-      <div :class="`basis-1/2 flex flex-row justify-end gap-x-4 !burger || burger`" class="max-sm:basis-auto max-sm:top-full max-sm:w-full max-sm:flex-col max-sm:gap-0 max-sm:hidden !burger">
-        <NuxtLink to="/">Home</NuxtLink>
-        <NuxtLink to="/Lab1" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">Lab1</NuxtLink>
-        <NuxtLink to="/Lab2" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">Lab2</NuxtLink>
-        <NuxtLink to="/Lab3" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">Lab3</NuxtLink>
-        <NuxtLink to="/Lab4" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">Lab4</NuxtLink>
-        <NuxtLink to="/Lab5" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">Lab5</NuxtLink>
-        <NuxtLink to="/Lab6" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">Lab6</NuxtLink>
-        <NuxtLink to="/login" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">Login</NuxtLink>
-        <NuxtLink to="/logout" class="my-auto p-2 border-b-2 border-black hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:text-center">Logout</NuxtLink>
-      </div>
-      <div @click="switch_burger" class="max-sm:flex max-sm:flex-col max-sm:gap-1 max-sm:justify-between max-sm:items-center max-sm:w-8 max-sm:h-6">
-        <span class="h-[3px] w-full bg-blue-950"></span>
-        <span class="h-[3px] w-full bg-blue-950"></span>
-        <span class="h-[3px] w-full bg-blue-950"></span>
-      </div>
-      <div v-else class="max-sm:flex-col max-sm:w-8 max-sm:h-6 justify-between max-sm:items-center max-sm:w-8 max-sm:h-6" @click="switch_burger">
-        <span class="h-[3px] w-full bg-blue-950 rotate-45 relative top-[9px]"></span>
-        <span class="h-[3px] w-full bg-blue-950 opacity-0"></span>
-        <span class="h-[3px] w-full bg-blue-950 relative bottom-2 rotate-[-45deg]"></span>
-      </div>
+
+    <div class="md:hidden" @click="toggleMobileMenu">
+      <svg v-if="!mobileMenuOpen" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+      <svg v-else class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
     </div>
+
+    <nav :class="['flex-col md:flex-row md:flex gap-8 items-center', mobileMenuOpen ? 'flex' : 'hidden', 'md:block']">
+      <NuxtLink to="/" class="p-2 hover:bg-gray-500 hover:text-white">
+        Home
+      </NuxtLink>
+
+      <div class="relative p-2 hover:bg-gray-500 hover:text-white" @mouseenter="showSubmenu = true" @mouseleave="showSubmenu = false">
+        Labs
+        <div v-show="showSubmenu" class="absolute top-full left-0 bg-white text-black w-40 shadow-md">
+          <NuxtLink to="/lab3" class="block p-2 border-b hover:bg-gray-500 hover:text-white">Lab3</NuxtLink>
+          <NuxtLink to="/lab4" class="block p-2 border-b hover:bg-gray-500 hover:text-white">Lab4</NuxtLink>
+          <NuxtLink to="/lab5" class="block p-2 border-b hover:bg-gray-500 hover:text-white">Lab5</NuxtLink>
+          <NuxtLink to="/lab6" class="block p-2 hover:bg-gray-500 hover:text-white">Lab6</NuxtLink>
+        </div>
+      </div>
+
+      <NuxtLink to="/login" class="p-2 hover:bg-gray-500 hover:text-white">
+        LogIn
+      </NuxtLink>
+      <NuxtLink to="/logout" class="p-2 hover:bg-gray-500 hover:text-white">
+        LogOut
+      </NuxtLink>
+    </nav>
   </header>
 
   <main class="p-5 flex bg-green-100 h-screen">
-    <slot></slot>
+    <slot />
   </main>
 
-  <footer class="flex flex-row w-full bg-green-400 border-t-2 border-gray-400 items-center justify-center px-4 py-2 gap-4">
-    <a href="https://www.youtube.com/" target="_blank">
-      <img src="assets/images/youtube.png" class="w-16 h-16">
-    </a>
-    <a href="https://github.com/" target="_blank">
-      <img src="assets/images/github.png" class="w-16 h-16">
-    </a>
-    <a href="https://www.facebook.com/" target="_blank">
-      <img src="assets/images/facebook.png" class="w-16 h-16 bg-transparent">
-    </a>
+  <footer class="flex flex-row w-full bg-green-400 border-t-2 border-gray-400 items-center justify-center p-4 gap-4">
+    <a href="https://www.youtube.com/"><img src="assets/images/youtube.png" class="w-16 h-16"></a>
+    <a href="https://github.com/"><img src="assets/images/github.png" class="w-16 h-16"></a>
+    <a href="https://www.facebook.com/"><img src="assets/images/facebook.png" class="w-16 h-16 bg-transparent"></a>
   </footer>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const showSubmenu = ref(false);
+const mobileMenuOpen = ref(false);
+
+function toggleMobileMenu() {
+  mobileMenuOpen.value = !mobileMenuOpen.value;
+}
+</script>
+
+<style scoped>
+nav {
+  transition: all 0.3s ease;
+}
+</style>

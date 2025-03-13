@@ -10,8 +10,7 @@
       Меню
     </button>
 
-    <nav :class="['basis-1/2 flex flex-row items-center justify-end px-8 gap-4', 
-      {'hidden': !showMenu, 'max-sm:flex max-sm:flex-col max-sm:items-center max-sm:w-full max-sm:absolute max-sm:top-full max-sm:bg-white max-sm:px-0'}]">
+    <nav :class="['basis-1/2 flex flex-row items-center justify-end px-8 gap-4', { 'hidden': !showMenu }, 'max-sm:flex-col max-sm:items-center max-sm:w-full max-sm:absolute max-sm:top-full max-sm:bg-white max-sm:px-0']">
       <NuxtLink to="/" class="my-auto p-2 hover:bg-gray-500 hover:text-white max-sm:w-full max-sm:border-b-2 max-sm:text-center">
         Home
       </NuxtLink>

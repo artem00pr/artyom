@@ -1,8 +1,10 @@
 <template>
   <header class="flex items-center justify-between w-full bg-green-400 border-b-2 border-gray-400 p-4">
+
     <div class="basis-1/4">
       <img src="assets/images/arizona.png" class="w-16 h-16 bg-transparent">
     </div>
+
 
     <div class="md:hidden" @click="toggleMobileMenu">
       <svg v-if="!mobileMenuOpen" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -13,31 +15,46 @@
       </svg>
     </div>
 
-    <nav :class="['flex-col md:flex-row md:flex gap-8 items-center', mobileMenuOpen ? 'flex' : 'hidden', 'md:block']">
-      <NuxtLink to="/" class="p-2 hover:bg-gray-500 hover:text-white">
+
+    <nav
+      :class="[
+        'md:flex gap-8 items-center',
+        mobileMenuOpen ? 'block' : 'hidden',
+        'absolute md:static top-16 left-0 w-full md:w-auto bg-green-400 md:bg-transparent z-50'
+      ]"
+    >
+      <NuxtLink to="/" class="block p-4 hover:bg-gray-500 hover:text-white">
         Home
       </NuxtLink>
 
-      <div class="relative p-2 hover:bg-gray-500 hover:text-white" @mouseenter="showSubmenu = true" @mouseleave="showSubmenu = false">
-        Labs
-        <div v-show="showSubmenu" class="absolute top-full left-0 bg-white text-black w-40 shadow-md">
-          <NuxtLink to="/lab3" class="block p-2 border-b hover:bg-gray-500 hover:text-white">Lab3</NuxtLink>
-          <NuxtLink to="/lab4" class="block p-2 border-b hover:bg-gray-500 hover:text-white">Lab4</NuxtLink>
-          <NuxtLink to="/lab5" class="block p-2 border-b hover:bg-gray-500 hover:text-white">Lab5</NuxtLink>
+      <div class="relative group">
+        <button
+          class="block p-4 hover:bg-gray-500 hover:text-white"
+          @click="toggleSubmenu"
+        >
+          Labs
+        </button>
+        <div
+          v-show="submenuOpen"
+          class="absolute left-0 mt-1 bg-white text-black shadow-md w-40"
+        >
+          <NuxtLink to="/lab3" class="block p-2 hover:bg-gray-500 hover:text-white">Lab3</NuxtLink>
+          <NuxtLink to="/lab4" class="block p-2 hover:bg-gray-500 hover:text-white">Lab4</NuxtLink>
+          <NuxtLink to="/lab5" class="block p-2 hover:bg-gray-500 hover:text-white">Lab5</NuxtLink>
           <NuxtLink to="/lab6" class="block p-2 hover:bg-gray-500 hover:text-white">Lab6</NuxtLink>
         </div>
       </div>
 
-      <NuxtLink to="/login" class="p-2 hover:bg-gray-500 hover:text-white">
+      <NuxtLink to="/login" class="block p-4 hover:bg-gray-500 hover:text-white">
         LogIn
       </NuxtLink>
-      <NuxtLink to="/logout" class="p-2 hover:bg-gray-500 hover:text-white">
+      <NuxtLink to="/logout" class="block p-4 hover:bg-gray-500 hover:text-white">
         LogOut
       </NuxtLink>
     </nav>
   </header>
 
-  <main class="p-5 flex bg-green-100 h-screen">
+  <main class="p-5 bg-green-100 min-h-screen">
     <slot />
   </main>
 
@@ -51,16 +68,18 @@
 <script setup>
 import { ref } from 'vue';
 
-const showSubmenu = ref(false);
 const mobileMenuOpen = ref(false);
+const submenuOpen = ref(false);
 
 function toggleMobileMenu() {
   mobileMenuOpen.value = !mobileMenuOpen.value;
+  if (!mobileMenuOpen.value) submenuOpen.value = false; // Закрываем подменю при закрытии мобильного меню
+}
+
+function toggleSubmenu() {
+  submenuOpen.value = !submenuOpen.value;
 }
 </script>
 
-<style scoped>
-nav {
-  transition: all 0.3s ease;
-}
-</style>
+
+ 
